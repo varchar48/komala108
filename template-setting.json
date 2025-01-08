@@ -1,0 +1,14 @@
+{
+  "inlineNavbar": true,
+  "languageSelector": false,
+  "keydatesPopout": {
+    "enabled": false,
+    "customPages": ["/", "/accommodation/"]
+  },
+  "sidebar": {
+    "enabled": true,
+    "customPages": ["/promotional-toolkit/", "/latest-news/", "/contact/"]
+  },
+  "headerFeatureBoxes": true
+}
+  

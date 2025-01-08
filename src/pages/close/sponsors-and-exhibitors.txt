@@ -1,0 +1,168 @@
+import React, { useState, useEffect } from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import sponsors from "@/data/sponsors";
+import { useSiteMetadata } from "@/hooks/use-site-metadata";
+
+function Gallery({ files }) {
+  if (!files || files.length === 0) {
+    return null;
+  }
+  return (
+    <div>
+      {files.map(({ node }) => {
+        const image = getImage(node.childImageSharp);
+        const fileName = node.relativePath.split("/").pop().split(".")[0];
+        const sponsor = sponsors.find(sponsor => sponsor.name === fileName);
+        const website = sponsor ? sponsor.website : '';
+        return (
+          <a href={website} key={fileName} target="_blank" rel="noopener noreferrer">
+            <GatsbyImage key={fileName} image={image} alt={fileName} className="object-contain mx-auto" />
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function OurSponsors() {
+
+  const data = useStaticQuery(graphql`
+    query {
+      allFile(filter: {sourceInstanceName: {eq: "spons"}}) {
+        edges {
+          node {
+            relativePath
+            sourceInstanceName
+            childImageSharp {
+              gatsbyImageData(layout: FIXED, height: 200, quality: 75, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  function categorizeFiles(edges) {
+    const categories = {
+      "bronze-sponsor": [],
+      "dinner-sponsor": [],
+      "supporters": [],
+    };
+
+    const sortedSponsors = sponsors.slice().sort((a, b) => {
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+      if (a.order !== undefined) {
+        return -1;
+      }
+      if (b.order !== undefined) {
+        return 1;
+      }
+      return sponsors.indexOf(a) - sponsors.indexOf(b);
+    });
+
+    const sortedEdges = edges.sort((a, b) => {
+      const fileNameA = a.node.relativePath.split('/').pop().split('.')[0];
+      const fileNameB = b.node.relativePath.split('/').pop().split('.')[0];
+      const sponsorA = sortedSponsors.find(sponsor => sponsor.name === fileNameA);
+      const sponsorB = sortedSponsors.find(sponsor => sponsor.name === fileNameB);
+      if (sponsorA && sponsorB) {
+        return sortedSponsors.indexOf(sponsorA) - sortedSponsors.indexOf(sponsorB);
+      }
+      return 0;
+    });
+
+    sortedEdges.forEach(({ node }) => {
+      const [categoryName, fullFilename] = node.relativePath.split('/');
+      const fileNameWithoutExtension = fullFilename.split('.').slice(0, -1).join('.');
+
+      if (categories[categoryName]) {
+        categories[categoryName].push({
+          withExtension: fullFilename,
+          withoutExtension: fileNameWithoutExtension,
+          node
+        });
+      }
+    });
+
+    return categories;
+  }
+
+  const categorizedFiles = categorizeFiles(data.allFile.edges);
+
+  const categoryOrder = [
+    'bronze-sponsor',
+    'dinner-sponsor',
+    'supporters',
+  ];
+
+  const sortedCategories = Object.keys(categorizedFiles).sort((a, b) => {
+    return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
+  });
+
+  const transformCategoryName = (categoryName) => {
+    const words = categoryName.split('-');
+    return words[0].charAt(0).toUpperCase() + words[0].slice(1) + ' ' + words.slice(1).join(' ');
+  };
+
+  return (
+    <>
+      <section>
+          <div className="container px-4 md:px-6">
+            <h2>We thank all our Sponsors and Supporters</h2>
+            {sortedCategories.map(categoryName => (
+              <div key={categoryName} className="mt-10">
+                <h3>{transformCategoryName(categoryName)}</h3>
+                <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-5 mt-10">
+                  {categorizedFiles[categoryName].map((file, index) => (
+                    <li key={`${categoryName}-${index}`} className="mb-10">
+                      <Gallery files={[file]} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+      </section>
+    </>
+  )
+}
+
+
+export function Head() {
+    const { title, description, image, siteUrl } = useSiteMetadata();
+    const pageTitle = "Sponsors & Exhibitors";
+    const metaDesc = "Page description for SEO";
+    const keywords = "add, your, relevant, keywords";
+    const author = "ICMSA";
+    const [currentPath, setCurrentPath] = useState('');
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        setCurrentPath(window.location.pathname);
+      }
+    }, []);
+  
+    return (
+      <>
+        <title>{`${pageTitle} - ${description}`}</title>
+        <meta name="description" content={metaDesc} />
+        <meta name="keywords" content={keywords} />
+        <meta name="author" content={author} />
+        <meta property="og:title" content={`${title} | ${description}`}  />
+        <meta property="og:description" content={metaDesc} />
+        <meta property="og:image" content={`${siteUrl}${image}`} />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="article:author" content={author} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={metaDesc} />
+        <meta name="twitter:image" content={`${siteUrl}${image}`} />
+        <link rel="canonical" href={`${siteUrl}${currentPath}`} />
+      </>
+    );
+  }
+  

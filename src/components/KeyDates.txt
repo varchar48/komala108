@@ -1,0 +1,53 @@
+import React from 'react'
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { CalendarRange } from "lucide-react";
+import useGoogleSheetData from "@/components/utility/useGoogleSheet";
+import ScrollRevealWrapper from "@/components/utility/ScrollRevealWrapper";
+
+const SPREADSHEET_ID = "1PbEeoFjiIOKic25_Po0Fr6jET2WPvpjmnvyllEn3Kv0";
+const SHEET_NAME = "Key Dates";
+
+const KeyDatesContent = ({ data, loading, error }) => (
+    <>
+        {error && <div>Error: {error.message}</div>}
+        {!loading && !error && data[0].data.map((item, index) => (
+            <ScrollRevealWrapper key={index} className="py-3" delay={100 * index}>
+                <p className="text-xl pt-2 mb-2 font-medium">{item.title}</p>
+                <p className="text-base">{item.date}</p>
+            </ScrollRevealWrapper>
+        ))}
+    </>
+);
+
+export function KeyDatesModal() {
+    const { data, loading, error } = useGoogleSheetData(SPREADSHEET_ID, SHEET_NAME);
+
+    return (
+        <Sheet>
+            <SheetTrigger className="fixed bottom-5 left-5 rounded-lg py-3 px-6 text-xl font-bold drop-shadow-lg hover:drop-shadow-xl flex items-center gap-2 uppercase bg-c1 text-white z-50">
+                <CalendarRange />Key Dates
+            </SheetTrigger>
+            <SheetContent side={"left"} aria-describedby={undefined}>
+                <SheetHeader>
+                    <SheetTitle className="mb-0 pb-0 text-2xl font-bold">Key Dates</SheetTitle>
+                    <SheetDescription asChild>
+                        <KeyDatesContent data={data} loading={loading} error={error} />
+                    </SheetDescription>
+                </SheetHeader>
+            </SheetContent>
+        </Sheet>
+    );
+}
+
+export function KeyDates() {
+    const { data, loading, error } = useGoogleSheetData(SPREADSHEET_ID, SHEET_NAME);
+
+    return <KeyDatesContent data={data} loading={loading} error={error} />;
+}

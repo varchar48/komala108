@@ -1,0 +1,101 @@
+import React, { useState, useEffect } from "react";
+import { useSiteMetadata } from "@/hooks/use-site-metadata";
+import ContactInfo from "@/components/cards/ContactInfo";
+import { StaticImage } from "gatsby-plugin-image";
+import ScrollRevealWrapper from "@/components/utility/ScrollRevealWrapper";
+
+export default function Contact() {
+  const emailDomain = "@your-event-domain.com";
+  const contactItems = [
+    { title: "General Enquiries", description: "Feel free to ask any questions!", emailPrefix: "info" },
+    { title: "Program Enquiries", description: "Have any questions about the program?", emailPrefix: "program" },
+    { title: "Registration Enquiries", description: "Need help with registration?", emailPrefix: "registration" },
+    { title: "Sponsorship Enquiries", description: "Have enquiries about sponsorship?", emailPrefix: "sponsorship" }
+  ];
+
+  return (
+    <section className="w-full container mx-auto px-4 md:px-6">
+      <div className="grid gap-12 lg:gap-16">
+        <ScrollRevealWrapper delay={250}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" >
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get in Touch</h2>
+              <p className="text-gray-500 max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Have a question or need assistance?<br />Our team is here to help.
+              </p>
+            </div>
+            <div className="flex flex-row gap-5 items-center">
+              <a href="https://icmsaust.com.au/" target="_blank" rel="noreferrer">
+                <StaticImage
+                  src="../images/icms-badge.webp"
+                  alt="Proudly managed by ICMSA badge"
+                  width={200}
+                  format={"auto"}
+                  quality={100}
+                  placeholder="blurred"
+                  layout="fixed"
+                />
+              </a>
+              <div>
+                <h4 className="mt-0">ICMS Australasia </h4>
+                <p className="mb-0">
+                  +61 (2) 9254 5000<br/>
+                  234 George Street, Sydney<br/>
+                  NSW, 2000<br/>
+                  Australia
+                </p>
+              </div>
+            </div>
+          </div>
+        </ScrollRevealWrapper>
+        
+        <div className="grid gap-8 md:grid-cols-2 md:gap-12">
+          {contactItems.map((item, index) => (
+            <ScrollRevealWrapper key={index} delay={250} index={index}>
+              <ContactInfo
+                title={item.title}
+                description={item.description}
+                email={`${item.emailPrefix}${emailDomain}`}
+              />
+            </ScrollRevealWrapper>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Head() {
+  const { title, description, image, siteUrl } = useSiteMetadata();
+  const pageTitle = "Contact Us";
+  const metaDesc = "Page description for SEO";
+  const keywords = "add, your, relevant, keywords";
+  const author = "ICMSA";
+  const [currentPath, setCurrentPath] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
+  return (
+    <>
+      <title>{`${pageTitle} - ${description}`}</title>
+      <meta name="description" content={metaDesc} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta property="og:title" content={`${title} | ${description}`}  />
+      <meta property="og:description" content={metaDesc} />
+      <meta property="og:image" content={`${siteUrl}${image}`} />
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="article:author" content={author} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDesc} />
+      <meta name="twitter:image" content={`${siteUrl}${image}`} />
+      <link rel="canonical" href={`${siteUrl}${currentPath}`} />
+    </>
+  );
+}

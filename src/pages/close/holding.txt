@@ -1,0 +1,10 @@
+import React from 'react'
+import HoldingPage from '../template/holding-page-template'
+
+export default function Holding() {
+  return (
+    <>
+        <HoldingPage />
+    </>
+  )
+}

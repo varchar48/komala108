@@ -1,0 +1,77 @@
+import React, { useState, useEffect } from "react";
+import { SkeletonEzineCard, EzineCard } from "@/components/cards/EzineCard";
+import { useSiteMetadata } from "@/hooks/use-site-metadata";
+import useGoogleSheetData from "@/components/utility/useGoogleSheet";
+
+export default function LatestNews() {
+  const sheetName = 'momc2023';
+  const { data, loading, error } = useGoogleSheetData('1OIRHjYKrPyqzLUl58rS80ntMOl3LRfRXoBWIcIxBNW0', sheetName);
+  const sheetData = !loading && !error && data.find(sheet => sheet.id === sheetName)?.data;
+
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+    return new Date(`${year}-${month}-${day}`);
+  };
+
+  const sortedSheetData = sheetData ? [...sheetData].sort((a, b) => {
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
+    return dateB - dateA;
+  }) : [];
+
+  return (
+    <>
+      <section>
+        <div className="container px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {loading && <>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <SkeletonEzineCard key={index} />
+              ))}
+            </>}
+            {error && <div>Error: {error.message}</div>}
+            {!loading && !error && sortedSheetData.map((item, index) => (
+              <EzineCard key={index} issue={item.issue} date={item.date} title={item.title} desc={item.desc} url={item.url} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+
+export function Head() {
+  const { title, description, image, siteUrl } = useSiteMetadata();
+  const pageTitle = "Latest News";
+  const metaDesc = "Page description for SEO";
+  const keywords = "add, your, relevant, keywords";
+  const author = "ICMSA";
+  const [currentPath, setCurrentPath] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
+  return (
+    <>
+      <title>{`${pageTitle} - ${description}`}</title>
+      <meta name="description" content={metaDesc} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta property="og:title" content={`${title} | ${description}`}  />
+      <meta property="og:description" content={metaDesc} />
+      <meta property="og:image" content={`${siteUrl}${image}`} />
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="article:author" content={author} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDesc} />
+      <meta name="twitter:image" content={`${siteUrl}${image}`} />
+      <link rel="canonical" href={`${siteUrl}${currentPath}`} />
+    </>
+  );
+}

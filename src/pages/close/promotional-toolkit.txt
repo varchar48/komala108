@@ -1,0 +1,146 @@
+import React from "react";
+import { useSiteMetadata } from "@/hooks/use-site-metadata";
+import { useStaticQuery, graphql } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import ScrollRevealWrapper from "@/components/utility/ScrollRevealWrapper";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { downloadLinks } from "@/data/downloadLinks";
+
+function PromotionalToolkit() {
+  
+  const data = useStaticQuery(graphql`
+    query {
+      allFile(
+        filter: { 
+          sourceInstanceName: { eq: "toolkit" }, 
+          extension: { regex: "/(jpg|jpeg|png|gif)/" } 
+        }
+      ) {
+        group(field: relativeDirectory) {
+          fieldValue
+          totalCount
+          edges {
+            node {
+              id
+              relativePath
+              relativeDirectory
+              extension
+              childImageSharp {
+                gatsbyImageData(
+                  width: 500
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
+              }
+              name
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  if (!data.allFile.group) {
+    return <div>No images found.</div>;
+  }
+
+  const groupedImages = data.allFile.group.reduce((acc, group) => {
+    const normalizedKey = group.fieldValue.replace("social/", "");
+    acc[normalizedKey] = group.edges.map((edge) => edge.node);
+    return acc;
+  }, {});
+
+  return (
+    <section>
+      <div className="container px-4 md:px-6">
+        <div className="space-y-14">
+        {Object.keys(downloadLinks).map((folder, index, array) => {
+          const { title, options } = downloadLinks[folder];
+
+          return (
+            <React.Fragment key={folder}>
+              <ScrollRevealWrapper className="my-4">
+                <div className="flex flex-col lg:flex-row justify-between items-center">
+                  <h2 className="text-3xl font-bold mb-5">{title}</h2>
+                  <div className="mb-4 lg:mb-0">
+                    <Select
+                      onValueChange={(url) => {
+                        window.open(url, "_blank");
+                      }}
+                    >
+                      <SelectTrigger className="w-[200px] bg-gray-200">
+                        <SelectValue placeholder="Download" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {options.map((item, idx) => (
+                          <SelectItem key={idx} value={item.url}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 gap-3">
+                  {groupedImages[folder]?.map((image) => {
+                    const img = getImage(image.childImageSharp);
+                    return (
+                      <GatsbyImage
+                        key={image.id}
+                        image={img}
+                        alt={`Image of ${image.name}`}
+                        className="rounded-md"
+                      />
+                    );
+                  })}
+                </div>
+              </ScrollRevealWrapper>
+              {index < array.length - 1 && <hr className="my-8 border-gray-300" />}
+            </React.Fragment>
+          );
+        })}
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default PromotionalToolkit;
+
+
+
+export function Head() {
+  const { title, description, image, siteUrl } = useSiteMetadata();
+  const pageTitle = "Promotional Toolkit";
+  const metaDesc = "Page description for SEO";
+  const keywords = "add, your, relevant, keywords";
+  const author = "ICMSA";
+  const [currentPath, setCurrentPath] = React.useState("");
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
+  return (
+    <>
+      <title>{`${pageTitle} - ${description}`}</title>
+      <meta name="description" content={metaDesc} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta property="og:title" content={`${title} | ${description}`} />
+      <meta property="og:description" content={metaDesc} />
+      <meta property="og:image" content={`${siteUrl}${image}`} />
+      <meta property="og:url" content={`${siteUrl}${currentPath}`} />
+      <meta property="og:type" content="website" />
+      <meta property="article:author" content={author} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDesc} />
+      <meta name="twitter:image" content={`${siteUrl}${image}`} />
+      <link rel="canonical" href={`${siteUrl}${currentPath}`} />
+    </>
+  );
+}
