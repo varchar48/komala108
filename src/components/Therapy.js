@@ -13,7 +13,7 @@ const TherapyPage = () => {
     return (
     <section>
         <div className="container mx-auto">
-        <h1 className="mb-8">Therapy</h1>
+        <h1 className="mb-8">療法</h1>
         <Accordion type="single" collapsible>
         {Therapy.map((item, index) => {
         return(

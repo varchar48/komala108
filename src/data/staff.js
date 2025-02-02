@@ -58,7 +58,7 @@ export const Staff = [
     {
         name: "楊仁杰",
         title: "物理治療師",
-        headshot: "profile.png",
+        headshot: "jared.jpg",
         intro: "楊仁杰(Jared)在香港理工大學畢業後繼續進修，並於香港中文大學完成了碩士學位課程。Jared致力以整體治療方案協助患者處理不同的痛症及傷患問題，利用普拉提、筋膜手法、現代針灸等方法幫助肌肉骨骼及腦神經系統復康。",
         quali: [
             {

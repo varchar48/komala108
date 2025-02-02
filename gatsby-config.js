@@ -29,11 +29,12 @@ module.exports = {
       },
       __key: 'images',
     },
+    `gatsby-plugin-mdx`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts`,
+        name: `blog`,
+        path: `${__dirname}/src/blog`,
       },
     },
     // {

@@ -4,7 +4,7 @@ import { StaffCard } from '@/components/cards/CustomCards'
 import { useSiteMetadata } from "@/hooks/use-site-metadata";
 import ScrollRevealWrapper from '@/components/utility/ScrollRevealWrapper';
 import TherapySection from '@/components/Therapy'
-
+import BlogList from '@/components/BlogList'
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <section className="w-full py-12 md:py-24" id="therapy">
         <div className="container grid items-center gap-6 px-4 md:px-6">
           <ScrollRevealWrapper delay={200}>
-            <div id="therapy">
+            <div>
               <TherapySection />
             </div>
           </ScrollRevealWrapper>
@@ -20,13 +20,30 @@ export default function Home() {
       </section>
 
       <section className="w-full pb-12 mb:pb-24 lg:pb-32 bg-gray-200" id="therapists">
-        <div className="custom-shape-divider-top-1721792938">
+        <div class="custom-shape-divider-top-1738454477">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path d="M1200 0L0 0 598.97 114.72 1200 0z" className="shape-fill fill-white"></path>
+                <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className="shape-fill fill-white"></path>
             </svg>
         </div>
-        <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-6 pt-12 md:pt-24 lg:pt-32">
+        
+        <div className="container px-4 md:px-6 pt-12 md:pt-24 lg:pt-32">
+          <h1 className="mb-8">治療師資料</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <StaffCard />
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full pb-12 mb:pb-24 lg:pb-32" id="blog">
+        <div class="custom-shape-divider-top-1738454477">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className="shape-fill fill-gray-200"></path>
+            </svg>
+        </div>
+        <div className="container grid items-center gap-6 px-4 md:px-6 pt-12 md:pt-24 lg:pt-32">
+          <ScrollRevealWrapper delay={200}>
+            <BlogList />
+          </ScrollRevealWrapper>
         </div>
       </section>
     </>

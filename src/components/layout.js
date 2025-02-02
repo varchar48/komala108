@@ -4,7 +4,6 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import BackToTop from '@/components/utility/BackToTop';
 import { useSiteMetadata } from '@/hooks/use-site-metadata';
-import config from '@/utils/config';
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -55,35 +54,21 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   // Configuration settings for the sidebar and key dates modal
-  const sidebarEnabled = config.sidebar.enabled;
-  const customPages = config.sidebar.customPages || [];
-  const keydatesPopout = config.keydatesPopout || { enabled: false, customPages: [] };
-
-  const shouldShowSidebar = sidebarEnabled && (customPages.includes(location.pathname) || customPages.length === 0);
-  const shouldShowKeyDatesModal = keydatesPopout.enabled && keydatesPopout.customPages.includes(location.pathname);
-
   const removeDefaultPadding = ["/"];
   const shouldRemovePadding = removeDefaultPadding.includes(location.pathname);
 
-  const sidebarClass = shouldShowSidebar ? 'lg:w-9/12' : 'w-full';
   const paddingClass = shouldRemovePadding ? '' : 'py-12 md:py-16 flex flex-col gap-12';
 
   return (
     <>
       <Header />
-      <main className={`flex ${shouldShowSidebar ? 'flex-col lg:flex-row container mx-auto p-0' : 'flex-col'}`}>
-        <div className={`w-full ${sidebarClass} ${paddingClass}`}>
+      <main className={`flex 'flex-col'}`}>
+        <div className={`w-full ${paddingClass}`}>
           {children}
         </div>
-        {shouldShowSidebar && (
-          <div className="w-full lg:w-3/12 bg-slate-100 py-12 md:py-16">
-            <Sidebar />
-          </div>
-        )}
       </main>
       <Footer />
       {isClient && <BackToTop />}
-      {isClient && shouldShowKeyDatesModal && <KeyDatesModal />}
     </>
   );
 }

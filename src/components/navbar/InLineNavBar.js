@@ -80,12 +80,12 @@ export default function NavBar() {
 
   return (
     <section className="relative z-30 lg:pt-8" id="il-navbar">
-      <div className="container relative mx-auto flex items-center justify-between py-6 px-6 bg-white lg:rounded-full">
+      <div className="container relative mx-auto flex items-center justify-between py-3 px-4">
 
         {/* Logo */}
         <Link className="flex items-center" to="/">
         <StaticImage
-          src="../../images/reim_logo.png"
+          src="../../images/reim_logo_rev.png"
           alt="RE:M Logo reversed"
           width={300}
           loading="lazy"
@@ -105,7 +105,7 @@ export default function NavBar() {
                         {item.label}
                         <ChevronDownIcon className="h-4 w-4 ml-1" />
                       </MenubarTrigger>
-                      <MenubarContent className="absolute mt-2 w-48 origin-top-right rounded-md p-1 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <MenubarContent className="absolute mt-2 w-48 origin-top-right rounded-md p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {item.items.map((subItem, subIndex) => (
                           <MenubarItem key={subIndex} onSelect={handleCloseDropdown}>
                             <Link
