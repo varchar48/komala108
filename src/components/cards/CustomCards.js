@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { UL } from "@/components/icons/IconList"
 import { Button } from "@/components/ui/button"
 
 // Component for individual card
@@ -20,7 +19,7 @@ function Card({ name, headshot, title, intro, quali }) {
         <img src={`/images/staff/${headshot}`} alt={name} width={90} height={90} className="aspect-square object-cover rounded-full "/>
         <div className="flex flex-col justify-start gap-2">
           <h3 className="text-xl font-bold my-0 text-start">{name}</h3>
-          <p className="text-xs bg-gray-200 px-4 py-2 rounded-md inline">{title}</p>
+          <p className="text-xs bg-gray-200 px-2 py-1 rounded-md inline">{title}</p>
         </div>
       </div>
      

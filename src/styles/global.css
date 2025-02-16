@@ -215,7 +215,7 @@ main li {
 }
 
 main a {
-  @apply text-indigo-500 hover:underline;
+  @apply text-hgreen;
 }
 
 /* Keyframes for sliding animation */

@@ -4,14 +4,14 @@ export const Therapy = [
         enname: "Schroth Therapy",
         intro: "由施羅特療法認證的物理治療師教授，脊椎側彎非手術evidence-based practice治療方法，平衡脊椎兩邊肌肉，靠自身肌肉力量使脊椎拉回正中。",
         imageName: "schroth-therapy.webp",
-        blog: "https://reimphysio.com/blog-detail/schroth-therapy/",
+        blog: "/schroth_therapy",
     },
     {
         chname: "筋膜手法治療",
         enname: "Fascial Manipulation",
         intro: "以往西醫比較注重肌肉，骨骼，韌帶。但隨著更深入研究筋膜，發現筋膜像一張大網從内而外覆蓋著整個人體，不僅包裹著肌肉骨骼韌帶，并且聯係包裹著内臟器官。可以解釋到更多已知或未知症狀的原因，而且和中醫不謀而合，解釋到經絡系統的學説，真正做到中西結合的治療方法。",
         imageName: "Fascial-Manipulation-2.jpg",
-        blog: "https://reimphysio.com/blog-detail/fascial-manipulation/",
+        blog: "/fascial-manipulation",
     },
     {
         chname: "整脊治療",
