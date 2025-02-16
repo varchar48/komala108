@@ -147,7 +147,7 @@ export default function NavBar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-10/12">
               <SheetHeader className="flex flex-row items-center gap-5" id="mobile-nav-header">
-                <SheetTitle className="text-c1 font-black text-2xl mb-0 mt-0">Menu</SheetTitle>
+                <SheetTitle className="text-c1 font-black text-2xl mb-0 mt-0">目錄</SheetTitle>
                 {config.languageSelector && <LangSelector />}
               </SheetHeader>
               <div className="mt-4">

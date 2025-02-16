@@ -41,7 +41,7 @@ const BlogList = () => {
                   <h2>
                     <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
                   </h2>
-                  <p className="text-sm px-4 py-2 bg-gray-200 rounded-md inline-block">{node.frontmatter.category}</p>
+                  <p className="text-sm px-2 py-1 bg-gray-200 rounded-md inline-block">{node.frontmatter.category}</p>
                   <p className="mt-3">{node.frontmatter.date}</p>
                   <p>{node.excerpt}</p>
                 </div>

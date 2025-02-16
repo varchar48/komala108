@@ -16,13 +16,13 @@ export default function Footer() {
   return (
     <footer>
       <ScrollRevealWrapper>
-        <section className="bg-c3">
+        <section className="bg-darkblue">
           <MapLocation />
         </section>
       </ScrollRevealWrapper>
 
       <ScrollRevealWrapper delay={250}>
-        <section className="bg-c1">
+        <section className="bg-darkblue">
           <div className="container px-4 md:px-6 py-12 md:py-16 mx-auto" id="footerInfo">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-1/4">
@@ -34,13 +34,13 @@ export default function Footer() {
                   placeholder="none"
                   formats={["auto", "webp", "avif"]}
                 />
-                <InstagramIcon />
+                <a href="https://www.instagram.com/reim_physio" target="_blank" rel="noopener noreferrer"><button className="text-gray-400 hover:text-white ms-4"><InstagramIcon /></button></a>
               </div>
               <div className="lg:w-3/4 grid md:grid-cols-2 gap-12">
                 <div>
                   <h3>營業時間</h3>
                     {TradeHourInfo.map((item, index) => (
-                      <div key={index} className="flex flex-row justify-between border-b border-blue-400 text-gray-400 py-3">
+                      <div key={index} className="flex flex-row justify-between border-b border-hgreen text-gray-400 py-3">
                         <p>{item.label}</p>
                         <p>{item.text}</p>
                       </div>

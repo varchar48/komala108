@@ -17,7 +17,7 @@ import { CalendarIcon } from '@/components/icons/icons'
 
 const Header = () => {
   const location = useLocation();
-  const { backgroundImage, heading, description } = getPageData(location.pathname);
+  const { backgroundImage } = getPageData(location.pathname);
   const isHomepage = location.pathname === '/';
 
   useEffect(() => {
@@ -50,6 +50,7 @@ const Header = () => {
         <div className="absolute inset-0 bg-gray-900 opacity-70"></div>
         {config.inlineNavbar ? <InLineNavBar /> : <FWNavBar />}
 
+        { isHomepage && 
         <ScrollRevealWrapper>
         <section className="relative z-10 py-20">
           <div className="container mx-auto grid grid-cols-1 gap-16 px-6 lg:grid-cols-2">
@@ -58,7 +59,7 @@ const Header = () => {
                 <p className="font-bold leading-tight text-white">
                     Registered Physiotherapy Center in Hong Kong
                 </p>
-                <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="text-4xl font-bold leading-tight text-white">
                 Restore Rehab Relief<br />
                 &ndash; in Motion
                 </h1>
@@ -84,7 +85,7 @@ const Header = () => {
                     { CarouselImg.map((item , index) => {
                       return(
                         <CarouselItem key={index}>
-                          <img src={`/images/therapy/${item.imageName}`} className="w-full aspect-[16/9] object-cover rounded-lg" />
+                          <img src={`/images/therapy/${item.imageName}`} alt={item.imageName} className="w-full aspect-[16/9] object-cover rounded-lg" />
                         </CarouselItem>
                       )
                     })}
@@ -94,6 +95,7 @@ const Header = () => {
           </div>
         </section>
         </ScrollRevealWrapper>
+        }
 
       </header>
     </>

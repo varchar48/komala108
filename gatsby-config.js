@@ -19,6 +19,7 @@ module.exports = {
         icon: 'src/images/reim_favicon.png', // This is favicon
       },
     },
+    `gatsby-plugin-react-helmet`,
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {

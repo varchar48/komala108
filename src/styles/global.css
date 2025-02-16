@@ -75,11 +75,11 @@ h1 {
 }
 
 h2 {
-  @apply text-3xl lg:text-4xl font-bold mb-3 mt-4 text-c2;
+  @apply text-3xl lg:text-4xl font-bold mb-3 mt-4 text-hblue;
 }
 
 h3 {
-  @apply text-2xl lg:text-3xl font-semibold mb-3 mt-4 text-c4;
+  @apply text-2xl lg:text-3xl font-semibold mb-3 mt-4 text-hblue;
 }
 
 h4 {
@@ -228,4 +228,9 @@ main a {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* blog */
+.blog-sqimg{
+  @apply w-full max-w-md border-4 border-white shadow-md border-4 border-white shadow-md;
 }

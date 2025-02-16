@@ -57,7 +57,7 @@ export default function Layout({ children }) {
   const removeDefaultPadding = ["/"];
   const shouldRemovePadding = removeDefaultPadding.includes(location.pathname);
 
-  const paddingClass = shouldRemovePadding ? '' : 'py-12 md:py-16 flex flex-col gap-12';
+  const paddingClass = shouldRemovePadding ? '' : 'flex flex-col gap-12';
 
   return (
     <>
