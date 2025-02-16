@@ -64,6 +64,10 @@ export default function Footer() {
                 ))}
               </div>
             </div> 
+          
+            </div>
+            <div className="border-t border-white/30 mt-8 py-8">
+              <p className="text-white/50 text-center">© 2025 Enshrinee.</p>
             </div>
           </div>
       </section>
