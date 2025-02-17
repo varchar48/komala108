@@ -54,7 +54,7 @@ const BlogList = () => {
            <Link to={node.fields.slug}>
           <div className="flex lg:flex-row flex-col rounded-lg bg-white hover:bg-gray-50 shadow-md" key={node.id}>
             <div className="lg:basis-1/3">
-              <img src={`/images/blog/${node.frontmatter.featureImg}`} alt={node.frontmatter.title} className="w-full lg:rounded-s-lg rounded-t-lg lg:rounded-tr-0 object-cover aspect-square" />
+              <img src={`/images/blog/${node.frontmatter.featureImg}`} alt={node.frontmatter.title} className="w-full lg:rounded-s-lg max-lg:rounded-t-lg object-cover aspect-square" />
             </div>
             <div className="lg:basis-2/3 p-6 space-y-4">
               <p className="text-xl font-bold line-clamp-1">
@@ -86,7 +86,7 @@ const BlogList = () => {
           <Link to={node.fields.slug}>
             <div className="flex lg:flex-row flex-col rounded-lg bg-white hover:bg-gray-50 shadow-md" key={node.id}>
               <div className="lg:basis-1/3">
-                <img src={`/images/blog/${node.frontmatter.featureImg}`} alt={node.frontmatter.title} className="w-full lg:rounded-s-lg rounded-t-lg lg:rounded-tr-0 object-cover aspect-square" />
+                <img src={`/images/blog/${node.frontmatter.featureImg}`} alt={node.frontmatter.title} className="w-full lg:rounded-s-lg max-lg:rounded-t-lg object-cover aspect-square" />
               </div>
               <div className="lg:basis-2/3 p-6 space-y-4">
                 <p className="text-xl font-bold line-clamp-1">
